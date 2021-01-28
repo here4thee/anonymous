@@ -1,0 +1,429 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "burn",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "new_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "slvr_per_token_mg",
+                    "type": "uint16"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                },
+                {
+                    "name": "transfer_locked",
+                    "type": "bool"
+                },
+                {
+                    "name": "redeem_locked",
+                    "type": "bool"
+                },
+                {
+                    "name": "contract_locked",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "currency_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "total_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "slvr_per_token_mg",
+                    "type": "uint16"
+                },
+                {
+                    "name": "contract_locked",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "custinfo",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "account_name",
+                    "type": "name"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                },
+                {
+                    "name": "issue_balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "issue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "issueclose",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issue",
+                    "type": "asset"
+                },
+                {
+                    "name": "round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "issueopen",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issue",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "issuestats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "round",
+                    "type": "uint64"
+                },
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "total_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "slvr_per_token_mg",
+                    "type": "uint16"
+                },
+                {
+                    "name": "transfer_locked",
+                    "type": "bool"
+                },
+                {
+                    "name": "redeem_locked",
+                    "type": "bool"
+                },
+                {
+                    "name": "open_status",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "lock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "lock",
+                    "type": "asset"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "redeem",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "redeemlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "lock",
+                    "type": "asset"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "redeemunlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "unlock",
+                    "type": "asset"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "tokenlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "lock",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "tokenunlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "unlock",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "transfer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "unlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "unlock",
+                    "type": "asset"
+                },
+                {
+                    "name": "issue_round",
+                    "type": "uint64"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "burn",
+            "type": "burn",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset"]
+        },
+        {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset","uint16","uint64","bool","bool","bool"]
+        },
+        {
+            "name": "issue",
+            "type": "issue",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset","string","uint64"]
+        },
+        {
+            "name": "issueclose",
+            "type": "issueclose",
+            "ricardian_contract": "",
+            "arg_types": ["asset","uint64"]
+        },
+        {
+            "name": "issueopen",
+            "type": "issueopen",
+            "ricardian_contract": "",
+            "arg_types": ["asset","name","uint64"]
+        },
+        {
+            "name": "lock",
+            "type": "lock",
+            "ricardian_contract": "",
+            "arg_types": ["asset","uint64"]
+        },
+        {
+            "name": "redeem",
+            "type": "redeem",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset"]
+        },
+        {
+            "name": "redeemlock",
+            "type": "redeemlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset","uint64"]
+        },
+        {
+            "name": "redeemunlock",
+            "type": "redeemunlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset","uint64"]
+        },
+        {
+            "name": "tokenlock",
+            "type": "tokenlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset"]
+        },
+        {
+            "name": "tokenunlock",
+            "type": "tokenunlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset"]
+        },
+        {
+            "name": "transfer",
+            "type": "transfer",
+            "ricardian_contract": "",
+            "arg_types": ["name","name","asset","string"]
+        },
+        {
+            "name": "unlock",
+            "type": "unlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset","uint64"]
+        }
+    ],
+    "tables": [
+        {
+            "name": "accounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "customers",
+            "type": "custinfo",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "issues",
+            "type": "issuestats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "stats",
+            "type": "currency_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}

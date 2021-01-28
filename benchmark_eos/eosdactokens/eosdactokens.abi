@@ -1,0 +1,346 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "burn",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "close",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "contr_config",
+            "base": "",
+            "fields": [
+                {
+                    "name": "notifycontr",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "transfer_locked",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "currency_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "max_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "transfer_locked",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "issue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "member",
+            "base": "",
+            "fields": [
+                {
+                    "name": "sender",
+                    "type": "name"
+                },
+                {
+                    "name": "agreedtermsversion",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "memberreg",
+            "base": "",
+            "fields": [
+                {
+                    "name": "sender",
+                    "type": "name"
+                },
+                {
+                    "name": "agreedterms",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "memberunreg",
+            "base": "",
+            "fields": [
+                {
+                    "name": "sender",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "newmemterms",
+            "base": "",
+            "fields": [
+                {
+                    "name": "terms",
+                    "type": "string"
+                },
+                {
+                    "name": "hash",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "termsinfo",
+            "base": "",
+            "fields": [
+                {
+                    "name": "terms",
+                    "type": "string"
+                },
+                {
+                    "name": "hash",
+                    "type": "string"
+                },
+                {
+                    "name": "version",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "transfer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "unlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "unlock",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "updateconfig",
+            "base": "",
+            "fields": [
+                {
+                    "name": "notifycontr",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "updateterms",
+            "base": "",
+            "fields": [
+                {
+                    "name": "termsid",
+                    "type": "uint64"
+                },
+                {
+                    "name": "terms",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "burn",
+            "type": "burn",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset"]
+        },
+        {
+            "name": "close",
+            "type": "close",
+            "ricardian_contract": "",
+            "arg_types": ["name","symbol"]
+        },
+        {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset","bool"]
+        },
+        {
+            "name": "issue",
+            "type": "issue",
+            "ricardian_contract": "",
+            "arg_types": ["name","asset","string"]
+        },
+        {
+            "name": "memberreg",
+            "type": "memberreg",
+            "ricardian_contract": "",
+            "arg_types": ["name","string"]
+        },
+        {
+            "name": "memberunreg",
+            "type": "memberunreg",
+            "ricardian_contract": "",
+            "arg_types": ["name"]
+        },
+        {
+            "name": "newmemterms",
+            "type": "newmemterms",
+            "ricardian_contract": "",
+            "arg_types": ["string","string"]
+        },
+        {
+            "name": "transfer",
+            "type": "transfer",
+            "ricardian_contract": "",
+            "arg_types": ["name","name","asset","string"]
+        },
+        {
+            "name": "unlock",
+            "type": "unlock",
+            "ricardian_contract": "",
+            "arg_types": ["asset"]
+        },
+        {
+            "name": "updateconfig",
+            "type": "updateconfig",
+            "ricardian_contract": "",
+            "arg_types": ["name"]
+        },
+        {
+            "name": "updateterms",
+            "type": "updateterms",
+            "ricardian_contract": "",
+            "arg_types": ["uint64","string"]
+        }
+    ],
+    "tables": [
+        {
+            "name": "accounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "config",
+            "type": "contr_config",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "members",
+            "type": "member",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "memberterms",
+            "type": "termsinfo",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "stat",
+            "type": "currency_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}
