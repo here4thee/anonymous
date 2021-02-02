@@ -19,6 +19,7 @@ class PartiallyTxnSet(object):
             for inst in self.dfg[func_name]["buggy_insts"]:
                 op1 = inst[3]
                 op2 = inst[4]
+                # Append critical instructions to inj_insts based on vulnerability type
                 if self.vul_type == "intflow":
                     if type(op1) == Node and (op1.attr == "unsafe" or op1.func + "$" + op1.name in self.dfg[func_name]["unsafe_variables"]):
                         inj_insts.append({"inst_num": inst[0], "inst_str": inst[1]})
@@ -46,7 +47,7 @@ class PartiallyTxnSet(object):
         for func_name in inj_pts:
             call_sequence.append([{"func_name": func_name, "instructions": inj_pts[func_name]}])
 
-        ITER_LIMIT = 2
+        ITER_LIMIT = 2 # change the number to adjust the length limit of call sequence
         for i in range(0, ITER_LIMIT):
             new_call_sequence = []
             for seq in call_sequence:
@@ -105,5 +106,6 @@ class PartiallyTxnSet(object):
         filtered_call_sequence = []
         for seq in call_sequence:
             if "@wasm_rt_call_stack_depth" not in str(seq):
+                # Eliminate the integer-flow false positives of @wasm_rt_call_stack_depth
                 filtered_call_sequence.append(seq)
         return json.dumps(filtered_call_sequence)

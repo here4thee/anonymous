@@ -115,6 +115,7 @@ class DataflowGraph(object):
                 op1 = None
                 op2 = None
 
+                # Propagate taint flag based on instruction type
                 if " = add" in codeline:
                     op0 = codeline.split(" = add ")[0]
                     op1 = codeline.split(" = add ")[1].split(", ")[0].split(" ")[-1]

@@ -7,6 +7,7 @@ from solidity_parser.parser import AstVisitor
 from scope.simbol_table import Symbol, SymbolTable
 from scope.types import MappingType, ArrayType, StructType, EnumType, ContractType
 
+# Solidity Types
 BOOL = ir.IntType(1)
 BYTE = ir.IntType(8)
 i256 = ir.IntType(256)
@@ -45,6 +46,7 @@ class LLVMCodeGenerator(AstVisitor):
             return self._codegen_Throw(node)
         else:
             if node.type == "InLineAssemblyStatement":
+                # TODO: Currently embedded assembly is not supported
                 return
             method = '_codegen_' + node.type
             return getattr(self, method)(node)
@@ -54,9 +56,11 @@ class LLVMCodeGenerator(AstVisitor):
             self._codegen(child)
     
     def _codegen_PragmaDirective(self, node):
+        # TODO: Add assertion that given Solidity contracts can be compiled by solc-v0.4.24
         pass
 
     def _codegen_ImportDirective(self, node):
+        # TODO: Currently inherited or library contract is not supported
         pass
     
     def _codegen_StateVariableDeclaration(self, node):
@@ -79,24 +83,29 @@ class LLVMCodeGenerator(AstVisitor):
         self.modules[self.contract] = self.module
 
         if not self.symbol_table.lookup("arithmetic_result"):
+            # This variable is used for temporarily storing arithmetic results
             arithmetic_result = ir.GlobalVariable(self.module, i256, "arithmetic_result")
             arithmetic_result.initializer = i256(0)
             self.symbol_table.append(Symbol("arithmetic_result", int, i256, arithmetic_result))
 
+            # Initialize msg.sender as global variables
             msg_sender_balance = ir.GlobalVariable(self.module, i256, "msg_sender_balance")
             msg_sender_balance.initializer = i256(0)
             self.symbol_table.append(Symbol("msg_sender_balance", int, i256, msg_sender_balance))
-            
+
+            # Initialize msg.value as global variables
             msg_value = ir.GlobalVariable(self.module, i256, "msg_value")
             msg_value.initializer = i256(0)
             self.symbol_table.append(Symbol("msg_value", int, i256, msg_value))
 
+            # Declare built-in functions call.value
             fnty = ir.FunctionType(i256, [])
             func = ir.Function(self.module, fnty, name="call.value")
             block = func.append_basic_block(name="entry")
             self.builder = ir.IRBuilder(block)
             self.builder.ret(i256(0))
 
+            # Declare built-in functions call.gas
             fnty = ir.FunctionType(i256, [])
             func = ir.Function(self.module, fnty, name="call.gas")
             block = func.append_basic_block(name="entry")
@@ -105,6 +114,7 @@ class LLVMCodeGenerator(AstVisitor):
 
         # pre-compile
         for node in root.subNodes:
+            # Go through the AST for user-defined types such as struct or enum
             if node.type == "StructDefinition":
                 struct_name = node.name
                 member_names = []
@@ -177,6 +187,8 @@ class LLVMCodeGenerator(AstVisitor):
                     var_addr = ir.GlobalVariable(self.module, i256, var_name)
                     self.symbol_table.append(Symbol(var_name, int, i256, var_addr))
             elif node.type == "EventDefinition":
+                # Solidity events are usually used for logging (no security issues)
+                # We define events as functions with empty body
                 (arg_names, arg_types) = self._codegen(node.parameters)
 
                 arg_llTypes = []
@@ -232,6 +244,7 @@ class LLVMCodeGenerator(AstVisitor):
                     self.builder.store(func.args[i], alloca)
                 self.builder.ret(i256(0))
             elif node.type == "FunctionDefinition":
+                # For the first AST iteration, we only handle function parameters and return type
                 (arg_names, arg_types) = self._codegen(node.parameters)
 
                 arg_llTypes = []
@@ -377,6 +390,7 @@ class LLVMCodeGenerator(AstVisitor):
         if node.number.startswith("0x"):
             return address(int(hash(str(node.value))))
         if node.subdenomination and node.subdenomination.lower() == 'ether':
+            # TODO: This conversion is not fully implemented
             return i256(int(float(node.number) * (10 ** 18)))
         return i256(int(node.number))
     
@@ -424,15 +438,16 @@ class LLVMCodeGenerator(AstVisitor):
         if not node.isArray:
             return self._codegen(node.components[0])
         else:
-            # todo
+            # TODO: Currently arrays with initial values are not supported
             pass
 
     def _codegen_MemberAccess(self, node):
-        # todo
+        # TODO: Getters and Setters are not fully implemented for aggregate types
         member_name = node.memberName
         aggregate = self._codegen(node.expression)
 
         if member_name in ("balance", "number", "length"):
+            # TODO: address.balance, block.number and array.length are not implemented
             return i256(0)
         if member_name == "value":
             if aggregate == "call":
@@ -442,6 +457,7 @@ class LLVMCodeGenerator(AstVisitor):
         if member_name in ("sender", "origin"):
             return address(0)
         if member_name == "data":
+            # TODO: Initialize msg.data as global variable
             return i256("msg.data")
         if member_name == "timestamp":
             return i256(int(time.time()))
@@ -479,7 +495,7 @@ class LLVMCodeGenerator(AstVisitor):
         return aggregate
 
     def _codegen_IndexAccess(self, node):
-        # todo
+        # TODO: Getters and Setters are not fully implemented for aggregate types
         index = self._codegen(node.index)
         aggregate = self._codegen(node.base)
         if type(aggregate) is Symbol and type(aggregate.pyType) in (MappingType, ArrayType):
@@ -528,6 +544,7 @@ class LLVMCodeGenerator(AstVisitor):
             self.builder.store(i256(int(time.time())), alloca)
             return self.builder.load(alloca, name='now')
         elif identifier in ("require", "assert", "keccak256", "ecrecover"):
+            # TODO: Digital signature functions, e.g. keccak256 and ecrecover, are not supported
             return identifier
         else:
             funcArg = self.symbol_table.lookup("funcArg_%s_%s" % (self.function, identifier))
@@ -537,7 +554,6 @@ class LLVMCodeGenerator(AstVisitor):
             elif globalVar:
                 return globalVar
             else:
-                # todo
                 for contract_name in self.modules:
                     scopeGlobalVar = self.symbol_table.lookup("global_%s_%s" % (contract_name, identifier))
                     if scopeGlobalVar:
@@ -629,7 +645,7 @@ class LLVMCodeGenerator(AstVisitor):
           | Expression '||' Expression
           | Expression ('=' | '|=' | '^=' | '&=' | '<<=' | '>>=' | '+=' | '-=' | '*=' | '/=' | '%=') Expression
         '''
-        # todo
+        # TODO: Type inference is not fully implemented, sometimes the types of operands don't match with each other
         operator = node.operator
         left_operand = self._codegen(node.left)
         right_operand = self._codegen(node.right)
@@ -801,7 +817,7 @@ class LLVMCodeGenerator(AstVisitor):
             return
 
     def _codegen_UnaryOperation(self, node):
-        # todo
+        # TODO: Type inference is not fully implemented
         is_prefix = node.isPrefix
         unary_operator = node.operator
         unary_operand = self._codegen(node.subExpression)
@@ -975,7 +991,8 @@ class LLVMCodeGenerator(AstVisitor):
                 self.builder.ret(ret_type(0))
 
     def _codegen_FunctionCall(self, node):
-        # todo
+        # TODO: Currently we only implement a few built-in functions (may occur error "not declared in this scope")
+        # TODO: Contract inheritance is not supported (inter-contract function calls may fail)
         callee = self._codegen(node.expression)
         try:
             if type(callee) is ir.IntType or type(callee) is ir.Constant:

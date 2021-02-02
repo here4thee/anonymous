@@ -9,7 +9,7 @@ if __name__ == "__main__":
     '''
     
     if len(sys.argv) != 3:
-        print("Usage: python3 sol2ll-compiler-python.py <dataset path> <log file path>")
+        print("Usage: python3 sol2ll-frontend-python.py <dataset path> <log file path>")
         sys.exit()
 
     dataset_path = sys.argv[1]

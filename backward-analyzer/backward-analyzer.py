@@ -2,7 +2,7 @@ import os, sys, datetime
 from pts import PartiallyTxnSet
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Usage: python3 backward-analyzer.py <dataset path> <log file path> <vulnerability type>")
         sys.exit()
     
@@ -31,4 +31,3 @@ if __name__ == "__main__":
     with open(logfile_path, "w") as f:
         for key in execute_time:
             f.write("%s analyzed in %d milliseconds\n" % (key, execute_time[key]))
-            
